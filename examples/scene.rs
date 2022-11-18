@@ -5,8 +5,6 @@ use bevy::{
     },
     DefaultPlugins,
 };
-use bevy_normal_material::prelude::NormalMaterialPlugin;
-
 use bevy_normal_material::prelude::*;
 
 fn main() {
