@@ -5,6 +5,8 @@ Simple normal material for Bevy.
 
 ![Example](https://user-images.githubusercontent.com/1085910/202606799-2f8851cf-3006-44f2-a0e5-5cccbd76ea3a.png)
 
+[![crates.io](https://img.shields.io/crates/v/bevy_normal_material)](https://crates.io/crates/bevy_normal_material)
+
 ## Usage
 
 ### System setup
