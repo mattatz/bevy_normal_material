@@ -3,7 +3,9 @@ authors = [
   "Masatatsu Nakamura <masatatsu.nakamura@gmail.com>",
 ]
 categories = ["rendering"]
+description = "Simple normal material for Bevy"
 edition = "2021"
+homepage = "https://github.com/mattatz/bevy_normal_material"
 keywords = ["bevy", "gamedev", "graphics"]
 license = "MIT"
 name = "bevy_normal_material"
