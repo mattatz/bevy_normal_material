@@ -1,10 +1,45 @@
-use bevy::{prelude::Material, reflect::TypeUuid, render::render_resource::AsBindGroup};
+use bevy::{
+    prelude::{AlphaMode, Material},
+    reflect::TypeUuid,
+    render::render_resource::{AsBindGroup, Face},
+};
 
 use crate::SHADER_HANDLE;
 
 #[derive(AsBindGroup, TypeUuid, Clone, Copy)]
 #[uuid = "cd561053-324b-4f72-a486-422320cd7ac2"]
-pub struct NormalMaterial {}
+#[bind_group_data(NormalMaterialKey)]
+pub struct NormalMaterial {
+    #[uniform(0)]
+    pub opacity: f32,
+    pub depth_bias: f32,
+    pub cull_mode: Option<Face>,
+    pub alpha_mode: AlphaMode,
+}
+
+impl Default for NormalMaterial {
+    fn default() -> Self {
+        Self {
+            opacity: 1.,
+            depth_bias: 0.,
+            cull_mode: Some(Face::Back),
+            alpha_mode: Default::default(),
+        }
+    }
+}
+
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct NormalMaterialKey {
+    cull_mode: Option<Face>,
+}
+
+impl From<&NormalMaterial> for NormalMaterialKey {
+    fn from(material: &NormalMaterial) -> Self {
+        NormalMaterialKey {
+            cull_mode: material.cull_mode,
+        }
+    }
+}
 
 impl Material for NormalMaterial {
     fn vertex_shader() -> bevy::render::render_resource::ShaderRef {
@@ -16,19 +51,21 @@ impl Material for NormalMaterial {
     }
 
     fn alpha_mode(&self) -> bevy::prelude::AlphaMode {
-        bevy::prelude::AlphaMode::Opaque
+        self.alpha_mode
     }
 
     fn depth_bias(&self) -> f32 {
-        0.0
+        self.depth_bias
     }
 
     fn specialize(
         _pipeline: &bevy::pbr::MaterialPipeline<Self>,
-        _descriptor: &mut bevy::render::render_resource::RenderPipelineDescriptor,
+        descriptor: &mut bevy::render::render_resource::RenderPipelineDescriptor,
         _layout: &bevy::render::mesh::MeshVertexBufferLayout,
-        _key: bevy::pbr::MaterialPipelineKey<Self>,
+        key: bevy::pbr::MaterialPipelineKey<Self>,
     ) -> Result<(), bevy::render::render_resource::SpecializedMeshPipelineError> {
+        descriptor.primitive.cull_mode = key.bind_group_data.cull_mode;
+
         Ok(())
     }
 }

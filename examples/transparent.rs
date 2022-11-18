@@ -1,9 +1,8 @@
 use bevy::{
     prelude::{
-        shape, App, Assets, Camera3dBundle, ClearColor, Color, Commands, MaterialMeshBundle, Mesh,
-        ResMut, Transform, Vec3,
+        shape, AlphaMode, App, Assets, Camera3dBundle, ClearColor, Color, Commands,
+        MaterialMeshBundle, Mesh, ResMut, Transform, Vec3,
     },
-    render::render_resource::{Face, FrontFace},
     DefaultPlugins,
 };
 use bevy_normal_material::prelude::*;
@@ -25,7 +24,12 @@ fn setup(
     commands.spawn(MaterialMeshBundle {
         mesh: meshes.add(Mesh::from(shape::Cube { size: 1.0 })),
         transform: Transform::from_xyz(0.0, 0.25, 0.0),
-        material: materials.add(NormalMaterial::default()),
+        material: materials.add(NormalMaterial {
+            opacity: 0.5,
+            alpha_mode: AlphaMode::Blend,
+            cull_mode: None,
+            ..Default::default()
+        }),
         ..Default::default()
     });
 

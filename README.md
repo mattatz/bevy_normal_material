@@ -31,7 +31,7 @@ fn setup(
 ) {
     commands.spawn(MaterialMeshBundle {
         mesh: meshes.add(Mesh::from(shape::Cube { size: 1.0 })),
-        material: materials.add(NormalMaterial {}),
+        material: materials.add(NormalMaterial::default()),
         ..Default::default()
     });
 }
