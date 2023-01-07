@@ -41,6 +41,6 @@ fn setup(
 
 ## Compatibility
 
-| bevy | bevy_points |
+| bevy | bevy_normal_material |
 | ---- | ------------- |
 | 0.9  | 0.1           |
