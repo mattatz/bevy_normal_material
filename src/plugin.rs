@@ -9,8 +9,8 @@ impl Plugin for NormalMaterialPlugin {
         let mut shaders = app.world.get_resource_mut::<Assets<Shader>>().unwrap();
         shaders.set_untracked(
             SHADER_HANDLE,
-            Shader::from_wgsl(include_str!("./shaders/normal.wgsl")),
+            Shader::from_wgsl(include_str!("./shaders/normal.wgsl"), "./shaders/normal.wgsl"),
         );
-        app.add_plugin(MaterialPlugin::<NormalMaterial>::default());
+        app.add_plugins(MaterialPlugin::<NormalMaterial>::default());
     }
 }

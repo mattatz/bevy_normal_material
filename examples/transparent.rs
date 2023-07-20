@@ -1,7 +1,7 @@
 use bevy::{
     prelude::{
         shape, AlphaMode, App, Assets, Camera3dBundle, ClearColor, Color, Commands,
-        MaterialMeshBundle, Mesh, ResMut, Transform, Vec3,
+        MaterialMeshBundle, Mesh, ResMut, Transform, Vec3, Startup,
     },
     DefaultPlugins,
 };
@@ -10,9 +10,9 @@ use bevy_normal_material::prelude::*;
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
-        .add_plugin(NormalMaterialPlugin)
+        .add_plugins(NormalMaterialPlugin)
         .insert_resource(ClearColor(Color::rgb(0.01, 0.02, 0.08)))
-        .add_startup_system(setup)
+        .add_systems(Startup, setup)
         .run();
 }
 
