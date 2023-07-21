@@ -19,7 +19,7 @@ use bevy_normal_material::prelude::*;
 
 fn main() {
     App::new()
-        .add_plugin(NormalMaterialPlugin);
+        .add_plugins(NormalMaterialPlugin);
 }
 ```
 
@@ -45,3 +45,4 @@ fn setup(
 | ---- | ------------- |
 | 0.9  | 0.1           |
 | 0.10  | 0.2           |
+| 0.11  | 0.3           |
