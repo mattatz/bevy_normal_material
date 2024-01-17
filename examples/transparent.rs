@@ -1,7 +1,7 @@
 use bevy::{
     prelude::{
         shape, AlphaMode, App, Assets, Camera3dBundle, ClearColor, Color, Commands,
-        MaterialMeshBundle, Mesh, ResMut, Transform, Vec3, Startup,
+        MaterialMeshBundle, Mesh, ResMut, Startup, Transform, Vec3,
     },
     DefaultPlugins,
 };
