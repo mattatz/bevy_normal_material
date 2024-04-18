@@ -1,14 +1,13 @@
 use bevy::{
     asset::Asset,
     prelude::{AlphaMode, Material},
-    reflect::{TypePath, TypeUuid},
+    reflect::TypePath,
     render::render_resource::{AsBindGroup, Face},
 };
 
 use crate::SHADER_HANDLE;
 
-#[derive(AsBindGroup, TypeUuid, Clone, Copy, TypePath, Asset)]
-#[uuid = "cd561053-324b-4f72-a486-422320cd7ac2"]
+#[derive(AsBindGroup, Clone, Copy, TypePath, Asset)]
 #[bind_group_data(NormalMaterialKey)]
 pub struct NormalMaterial {
     #[uniform(0)]
