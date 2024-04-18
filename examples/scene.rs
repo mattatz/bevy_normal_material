@@ -1,7 +1,8 @@
 use bevy::{
+    math::primitives::Cuboid,
     prelude::{
-        shape, App, Assets, Camera3dBundle, ClearColor, Color, Commands, MaterialMeshBundle, Mesh,
-        ResMut, Startup, Transform, Vec3,
+        App, Assets, Camera3dBundle, ClearColor, Color, Commands, MaterialMeshBundle, Mesh, ResMut,
+        Startup, Transform, Vec3,
     },
     DefaultPlugins,
 };
@@ -22,7 +23,7 @@ fn setup(
     mut materials: ResMut<Assets<NormalMaterial>>,
 ) {
     commands.spawn(MaterialMeshBundle {
-        mesh: meshes.add(Mesh::from(shape::Cube { size: 1.0 })),
+        mesh: meshes.add(Mesh::from(Cuboid::default())),
         transform: Transform::from_xyz(0.0, 0.25, 0.0),
         material: materials.add(NormalMaterial::default()),
         ..Default::default()
