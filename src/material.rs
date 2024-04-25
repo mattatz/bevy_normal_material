@@ -2,19 +2,36 @@ use bevy::{
     asset::Asset,
     prelude::{AlphaMode, Material},
     reflect::TypePath,
-    render::render_resource::{AsBindGroup, Face},
+    render::render_resource::{AsBindGroup, Face, ShaderType},
 };
 
 use crate::SHADER_HANDLE;
 
 #[derive(AsBindGroup, Clone, Copy, TypePath, Asset)]
 #[bind_group_data(NormalMaterialKey)]
+#[uniform(0, NormalMaterialUniform)]
 pub struct NormalMaterial {
-    #[uniform(0)]
     pub opacity: f32,
     pub depth_bias: f32,
     pub cull_mode: Option<Face>,
     pub alpha_mode: AlphaMode,
+}
+
+#[derive(ShaderType)]
+struct NormalMaterialUniform {
+    opacity: f32,
+    #[cfg(feature = "webgl")]
+    _webgl2_padding: bevy::math::Vec3,
+}
+
+impl From<&NormalMaterial> for NormalMaterialUniform {
+    fn from(material: &NormalMaterial) -> NormalMaterialUniform {
+        NormalMaterialUniform {
+            opacity: material.opacity,
+            #[cfg(feature = "webgl")]
+            _webgl2_padding: Default::default(),
+        }
+    }
 }
 
 impl Default for NormalMaterial {
