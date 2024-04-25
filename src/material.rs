@@ -66,6 +66,15 @@ impl Material for NormalMaterial {
     ) -> Result<(), bevy::render::render_resource::SpecializedMeshPipelineError> {
         descriptor.primitive.cull_mode = key.bind_group_data.cull_mode;
 
+        // WebGL2 structs must be 16 byte aligned.
+        let shader_defs = vec![
+            #[cfg(feature = "webgl")]
+            "SIXTEEN_BYTE_ALIGNMENT".into(),
+        ];
+        if let Some(fragment) = &mut descriptor.fragment {
+            fragment.shader_defs = shader_defs;
+        }
+
         Ok(())
     }
 }
