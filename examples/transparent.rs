@@ -12,7 +12,7 @@ fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
         .add_plugins(NormalMaterialPlugin)
-        .insert_resource(ClearColor(Color::rgb(0.01, 0.02, 0.08)))
+        .insert_resource(ClearColor(Color::srgb(0.01, 0.02, 0.08)))
         .add_systems(Startup, setup)
         .run();
 }
