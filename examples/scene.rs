@@ -1,11 +1,8 @@
-use bevy::{
-    math::primitives::Cuboid,
-    prelude::{
-        App, Assets, Camera3dBundle, ClearColor, Color, Commands, MaterialMeshBundle, Mesh, ResMut,
-        Startup, Transform, Vec3,
-    },
-    DefaultPlugins,
-};
+use bevy::prelude::{Camera3d, Cuboid, Mesh3d, MeshMaterial3d};
+use bevy::{prelude::{
+    App, Assets, ClearColor, Color, Commands, Mesh, ResMut,
+    Startup, Transform, Vec3,
+}, DefaultPlugins};
 use bevy_normal_material::prelude::*;
 
 fn main() {
@@ -22,15 +19,14 @@ fn setup(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<NormalMaterial>>,
 ) {
-    commands.spawn(MaterialMeshBundle {
-        mesh: meshes.add(Mesh::from(Cuboid::default())),
-        transform: Transform::from_xyz(0.0, 0.25, 0.0),
-        material: materials.add(NormalMaterial::default()),
-        ..Default::default()
-    });
+    commands.spawn((
+        Mesh3d(meshes.add(Cuboid::default())),
+        MeshMaterial3d(materials.add(NormalMaterial::default())),
+        Transform::from_xyz(0.0, 0.25, 0.0)
+    ));
 
-    commands.spawn(Camera3dBundle {
-        transform: Transform::from_xyz(-2.0, 2.5, 5.0).looking_at(Vec3::ZERO, Vec3::Y),
-        ..Default::default()
-    });
+    commands.spawn((
+        Camera3d::default(),
+        Transform::from_xyz(-2.0, 2.5, 5.0).looking_at(Vec3::ZERO, Vec3::Y),
+    ));
 }
