@@ -14,7 +14,9 @@ var<uniform> material: NormalMaterial;
 @fragment
 fn fragment(
     mesh: VertexOutput,
+    @builtin(front_facing) is_front: bool
 ) -> @location(0) vec4<f32> {
-    var nn = (mesh.world_normal + 1.0) * 0.5;
+    var normal = select(-mesh.world_normal, mesh.world_normal, is_front);
+    var nn = (normal + 1.0) * 0.5;
     return vec4(nn, material.opacity);
 }
