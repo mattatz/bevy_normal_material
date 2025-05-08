@@ -11,7 +11,7 @@ license = "MIT"
 name = "bevy_normal_material"
 readme = "README.md"
 repository = "https://github.com/mattatz/bevy_normal_material"
-version = "0.7.1"
+version = "0.8.0"
 
 [dependencies.bevy]
 default-features = false
