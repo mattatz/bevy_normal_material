@@ -23,7 +23,7 @@ fn main() {
 }
 ```
 
-### Apply a component to a MaterialMeshBundle
+### Apply a material to a mesh
 
 ```rust
 fn setup(
@@ -31,11 +31,10 @@ fn setup(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<NormalMaterial>>,
 ) {
-    commands.spawn(MaterialMeshBundle {
-        mesh: meshes.add(Mesh::from(shape::Cube { size: 1.0 })),
-        material: materials.add(NormalMaterial::default()),
-        ..Default::default()
-    });
+    commands.spawn((
+        Mesh3d(meshes.add(Mesh::from(Cuboid::default()))),
+        MeshMaterial3d(materials.add(NormalMaterial::default())),
+    ));
 }
 ```
 
@@ -51,3 +50,4 @@ fn setup(
 | 0.14  | 0.6           |
 | 0.15  | 0.7           |
 | 0.16  | 0.8           |
+| 0.18  | 0.10          |

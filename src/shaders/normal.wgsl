@@ -8,7 +8,7 @@ struct NormalMaterial {
 #endif
 };
 
-@group(2) @binding(0)
+@group(#{MATERIAL_BIND_GROUP}) @binding(0)
 var<uniform> material: NormalMaterial;
 
 @fragment

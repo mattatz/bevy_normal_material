@@ -3,9 +3,8 @@ use bevy::{
     prelude::{AlphaMode, Material},
     reflect::TypePath,
     render::render_resource::{AsBindGroup, Face, ShaderType},
+    shader::ShaderRef,
 };
-
-use crate::SHADER_HANDLE;
 
 #[derive(AsBindGroup, Clone, Copy, TypePath, Asset)]
 #[bind_group_data(NormalMaterialKey)]
@@ -59,15 +58,15 @@ impl From<&NormalMaterial> for NormalMaterialKey {
 }
 
 impl Material for NormalMaterial {
-    fn vertex_shader() -> bevy::render::render_resource::ShaderRef {
-        bevy::render::render_resource::ShaderRef::Default
+    fn vertex_shader() -> ShaderRef {
+        ShaderRef::Default
     }
 
-    fn fragment_shader() -> bevy::render::render_resource::ShaderRef {
-        bevy::render::render_resource::ShaderRef::Handle(SHADER_HANDLE.clone())
+    fn fragment_shader() -> ShaderRef {
+        "embedded://bevy_normal_material/shaders/normal.wgsl".into()
     }
 
-    fn alpha_mode(&self) -> bevy::prelude::AlphaMode {
+    fn alpha_mode(&self) -> AlphaMode {
         self.alpha_mode
     }
 
@@ -76,20 +75,16 @@ impl Material for NormalMaterial {
     }
 
     fn specialize(
-        _pipeline: &bevy::pbr::MaterialPipeline<Self>,
+        _pipeline: &bevy::pbr::MaterialPipeline,
         descriptor: &mut bevy::render::render_resource::RenderPipelineDescriptor,
-        _layout: &bevy::render::mesh::MeshVertexBufferLayoutRef,
+        _layout: &bevy::mesh::MeshVertexBufferLayoutRef,
         key: bevy::pbr::MaterialPipelineKey<Self>,
     ) -> Result<(), bevy::render::render_resource::SpecializedMeshPipelineError> {
         descriptor.primitive.cull_mode = key.bind_group_data.cull_mode;
 
-        // WebGL2 structs must be 16 byte aligned.
-        let shader_defs = vec![
-            #[cfg(feature = "webgl")]
-            "SIXTEEN_BYTE_ALIGNMENT".into(),
-        ];
+        #[cfg(feature = "webgl")]
         if let Some(fragment) = &mut descriptor.fragment {
-            fragment.shader_defs = shader_defs;
+            fragment.shader_defs.push("SIXTEEN_BYTE_ALIGNMENT".into());
         }
 
         Ok(())
